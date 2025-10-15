@@ -28,7 +28,7 @@ An interdisiciplinary collective may have a shared goal, but each user is expert
 which in the current state is not quite there which is causing the AI bubble.
 
 ### Ethics
-- ethical ue of information, and ofc respecting data and adhering to things like PII, and GDSR
+- ethical ue of information, and ofc respecting data and adhering to things like PII, and GDPR
 
 ### Similar Companies
 
