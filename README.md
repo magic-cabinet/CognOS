@@ -1,3 +1,6 @@
+# Project Pali
+a tool with the goal of understanding the data of a user's data
+
 ## Problem Set
 - many organizations of many people have many sets of unstrucutred documents 
 that may compass many domain spaces
