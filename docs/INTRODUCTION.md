@@ -25,11 +25,12 @@ An interdisiciplinary collective may have a shared goal, but each user is expert
 (add some more concrete information regarding this later)
 - a lot of money is being placed into AI, and a lot of power and water is being used to maintain this system.
 - However, it is important that the energy going into this AI system is worth the power it cost
+which in the current state is not quite there which is causing the AI bubble.
 
 ### Ethics
-- ethical ue of information, and ofc respecting data
+- ethical ue of information, and ofc respecting data and adhering to things like PII, and GDSR
 
 ### Similar Companies
 
 - palantir, which is out of reach for most people
-- google, which indexes information, but is extremely bias and 
+- google, which indexes information, but is extremely bias and earns money via ad venue
