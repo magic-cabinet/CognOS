@@ -1,5 +1,5 @@
 # Cognos
-![CognOS Slime](assets/cognos_slime.png)
+![CognOS Slime](/asssets/cognos_slime_resized.png)
 
 ### Cognos will have a few modules
 - Schema induction

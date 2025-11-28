@@ -1,11 +1,25 @@
-from document import Document
-from agent_schema import Schema
+from .document import Document
+from .agent_schema import Schema
 from typing import List, Dict
+from uuid import uuid1
 
 class Agent:
 
-    def ___init__(self, schema:Schema=None):
+    def __init__(self, schema:Schema=Schema(), agent_id=uuid1(), agent_name="agent"):
         self.schema = schema
+        self.agent_id = agent_id
+        self.agent_name = agent_name
+
+    def __str__(self):
+        return self.__dict__().__str__()
+    
+    def to_dict(self):
+        # return self.__dict__
+        return {
+            "agent_schema": self.schema.__str__(),
+            "agent_id": self.agent_id,
+            "agent_name": self.agent_name,
+        }
 
     def explore(self, documents:List[Document]) -> Schema:
         """
@@ -18,4 +32,4 @@ class Agent:
         """
         This is be used to generate a list of objects based on the schema
         """
-        pass 
+        pass

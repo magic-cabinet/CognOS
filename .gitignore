@@ -117,3 +117,9 @@ secrets.json
 # OS-specific
 .DS_Store
 Thumbs.db
+
+
+.venv/
+venv/
+
+data/
