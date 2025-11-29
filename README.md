@@ -54,3 +54,24 @@ curl -X GET http://localhost:8000/agent/list-agents
 curl -X GET http://localhost:8000/agent/get-agent/<your-agent-id>
 ```
 
+## Upload
+
+### List upload
+
+```
+curl -X GET http://localhost:8000/upload/list
+```
+
+### Upload File
+
+```
+curl -X POST http://localhost:8000/upload/upload \
+  -F "file=@./test.pdf" \
+  -F "upload_as=my_custom_name.pdf"
+```
+
+### Get File
+
+```
+curl http://localhost:8000/upload/get/mydoc.pdf
+```

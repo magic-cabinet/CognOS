@@ -55,27 +55,30 @@ def upload_file():
         return jsonify({"error": "No file uploaded"}), 400
 
     file = request.files["file"]
-    filename = file.filename
+    original_filename = file.filename
+
+    # NEW: optional override name
+    upload_as = request.form.get("upload_as", original_filename)
 
     client = get_minio_client()
-
     bucket_name = "documents"
 
     # Create bucket if not exists
     if not client.bucket_exists(bucket_name):
         client.make_bucket(bucket_name)
 
-    # Upload
+    # Upload with the chosen name
     client.put_object(
         bucket_name=bucket_name,
-        object_name=filename,
+        object_name=upload_as,
         data=file,
-        length=-1,  # stream without knowing length
+        length=-1,  # unknown length stream
         part_size=10 * 1024 * 1024,
     )
 
     return jsonify({
         "status": "success",
-        "file_name": filename,
-        "url": f"http://localhost:9000/{bucket_name}/{filename}"
+        "original_file_name": original_filename,
+        "stored_as": upload_as,
+        "url": f"http://localhost:9000/{bucket_name}/{upload_as}"
     })
