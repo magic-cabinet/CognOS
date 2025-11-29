@@ -1,8 +1,54 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, send_file
 from api.minio_client import get_minio_client
+from io import BytesIO
 
 upload_bp = Blueprint("upload", __name__, url_prefix="/upload")
 
+# ------------------------------
+# LIST ALL FILES IN BUCKET
+# ------------------------------
+@upload_bp.route("/list", methods=["GET"])
+def list_files():
+    client = get_minio_client()
+    bucket_name = "documents"
+
+    # Create bucket if not exists
+    if not client.bucket_exists(bucket_name):
+        client.make_bucket(bucket_name)
+
+    objects = client.list_objects(bucket_name, recursive=True)
+
+    files = [obj.object_name for obj in objects]
+
+    return jsonify({"files": files})
+
+# ------------------------------
+# GET A FILE AS BYTES
+# ------------------------------
+@upload_bp.route("/get/<path:filename>", methods=["GET"])
+def get_file(filename):
+    client = get_minio_client()
+    bucket_name = "documents"
+
+    try:
+        minio_obj = client.get_object(bucket_name, filename)
+
+        # Read into memory
+        file_bytes = minio_obj.read()
+
+        return send_file(
+            BytesIO(file_bytes),
+            download_name=filename,
+            mimetype="application/octet-stream"
+        )
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 404
+
+
+# ------------------------------
+# UPLOAD A FILE
+# ------------------------------
 @upload_bp.route("/upload", methods=["POST"])
 def upload_file():
     if "file" not in request.files:

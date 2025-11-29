@@ -29,6 +29,10 @@ run
 - Ollama
 - any llm that generates parsable json
 
+## API
+
+## Agents
+
 ### Create Your First Agent
 
 ```
@@ -37,3 +41,16 @@ run
     "agent_name": "MyAgent"
   }'
 ```
+
+### List your Agents
+
+```
+curl -X GET http://localhost:8000/agent/list-agents
+```
+
+### Select An Agent 
+
+```
+curl -X GET http://localhost:8000/agent/get-agent/<your-agent-id>
+```
+
