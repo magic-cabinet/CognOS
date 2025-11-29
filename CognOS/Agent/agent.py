@@ -14,10 +14,9 @@ class Agent:
         return self.__dict__().__str__()
     
     def to_dict(self):
-        # return self.__dict__
         return {
             "agent_schema": self.schema.__str__(),
-            "agent_id": self.agent_id,
+            "agent_id": self.agent_id.__str__(),
             "agent_name": self.agent_name,
         }
 

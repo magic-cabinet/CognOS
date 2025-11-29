@@ -1,39 +1,39 @@
-# Project Pali
-a tool with the goal of understanding the data of a user's data
+# CognOs
+![CognOS Slime](/asssets/cognos_slime_resized.png)
 
-## Problem Set
-- many organizations of many people have many sets of unstrucutred documents 
-that may compass many domain spaces
+### Why we Built CognOs
 
-- LLMs provides chat iterfaces, however a large amount of information could get lost and is not shared
-between people in the same organization, which could be used to help allign users towards their shared goal
+```
+"I intend, therefore i am"
+```
 
-- Decision makers can better understand their problem set and understand what to prioritize. 
-They can understand the enetites in their problem set and the depedences of them.
+This agent framework uses induced schema to simulate learning and generate agents with predictable, mutable and auditable behavior with the goal of alligning to the user.
 
-- being able to distill an object of arbitrary dimensions 
-(the entirirty of the unstructured dataset) 
-into a a given shape that can easily be converted into a 
-human-readable data serialization language such as json, yaml, yml
+Agents map spaces, sense spaces then extract information to make decisions.
 
-- It well understood that LLMs connot reason, however, it could be used for indentifying and organizing information 
-and features in that information in a auditable way. That could be used for statistical analysis, NER related problems
 
-- indentifying entities, their attributes (either categorical or ordinal), the geometry of the measures and metrics of a given attribute if applicable, their domain to rules that govern an entity or meta entity
+### Running Docker Image
 
-## Sample case study
-An interdisiciplinary collective may have a shared goal, but each user is experts in seperate domains. With this system users can input documents from their respective domain so that the information is easily distilled and pro
+run 
+```docker-compose up --build```
 
-## Market Landscape
-(add some more concrete information regarding this later)
-- a lot of money is being placed into AI, and a lot of power and water is being used to maintain this system.
-- However, it is important that the energy going into this AI system is worth the power it cost
-which in the current state is not quite there which is causing the AI bubble.
+### Tech stack
+- redis
+- supabase
+- flask
 
-### Ethics
-- ethical ue of information, and ofc respecting data and adhering to things like PII, and GDPR
+### supported LLMs
+- Anthropic
+- Gemini
+- OpenAI
+- Ollama
+- any llm that generates parsable json
 
-### Similar Companies
+### Create Your First Agent
 
-- palantir, which is out of reach for most people
-- google, which indexes information, but is extremely bias and earns money via ad venue
+```
+ curl -X POST http://localhost:8000/agent/create-agent   -H "Content-Type: application/json"   -d '{
+    "schema": "whatever the user wants as a string",
+    "agent_name": "MyAgent"
+  }'
+```

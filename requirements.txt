@@ -29,3 +29,5 @@ minio
 python-multipart
 flask
 gunicorn
+redis
+minio
