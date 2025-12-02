@@ -1,7 +1,6 @@
-from .document import Document
-from .agent_schema import Schema
-from CognOS.Agent.document import Document
-from CognOS.Agent.agent_schema import Schema
+from core.agent.document import Document
+from core.agent.agent_schema import Schema
+from core.agent.utils import parse_llm_json_block
 from typing import List, Dict
 from uuid import uuid1
 
@@ -14,11 +13,13 @@ class Agent:
         agent_id=uuid1(),
         agent_name="agent",
         agent_prompt="",
+        agent_type="gemini"
     ):
         self.schema = schema
         self.agent_id = agent_id
         self.agent_name = agent_name
         self.agent_prompt = agent_prompt
+        self.agent_type = agent_type
 
     def __str__(self):
         return self.__dict__().__str__()
@@ -30,7 +31,7 @@ class Agent:
             "agent_name": self.agent_name,
         }
 
-    def query(self):
+    def query(self, data:str):
         pass
 
     def explore(self, documents: List[Document]) -> Schema:
@@ -45,3 +46,18 @@ class Agent:
         This is be used to generate a list of objects based on the schema
         """
         pass
+
+    def schema_induction(self, data:str) -> Dict:
+        output = self.query(data)
+        json_data = parse_llm_json_block(output)
+        return json_data
+    
+    def schema_extraction(self, data:str) -> Dict:
+        prompt = "you will be given a json file. Extract the schema"
+        agent_query = f"{str(self.schema)} {prompt}"
+        temp_stuff = self.query(agent_query)
+        alt_json_data = parse_llm_json_block(temp_stuff)
+        return alt_json_data
+    
+
+
