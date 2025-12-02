@@ -1,7 +1,7 @@
 from typing import Optional, Dict, Any
 from uuid import uuid1
-from CognOS.Agent.agent import Agent
-from CognOS.Agent.agent_schema import Schema
+from core.agent.agent import Agent
+from core.agent.agent_schema import Schema
 from dotenv import load_dotenv
 import os
 from google import genai

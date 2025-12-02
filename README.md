@@ -1,5 +1,5 @@
 # CognOs
-![CognOS Slime](/asssets/cognos_slime_resized.png)
+![CognOS Slime](/assets/cognos_slime_resized.png)
 
 ### Why we Built CognOs
 
@@ -36,22 +36,24 @@ run
 ### Create Your First Agent
 
 ```
- curl -X POST http://localhost:8000/agent/create-agent   -H "Content-Type: application/json"   -d '{
-    "schema": "whatever the user wants as a string",
-    "agent_name": "MyAgent"
-  }'
+curl -X POST http://localhost:8000/agent/create   -H "Content-Type: application/json"   -d '{
+        "agent_name": "test",
+        "agent_type": "gemini",
+        "agent_prompt": "test prompt",
+        "schema": {}
+      }'
 ```
 
 ### List your Agents
 
 ```
-curl -X GET http://localhost:8000/agent/list-agents
+curl -X GET http://localhost:8000/agent/
 ```
 
 ### Select An Agent 
 
 ```
-curl -X GET http://localhost:8000/agent/get-agent/<your-agent-id>
+curl -X GET http://localhost:8000/agent/<your-agent-id>
 ```
 
 ## Upload

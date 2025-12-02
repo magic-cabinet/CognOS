@@ -1,7 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from core_api.services.redis_service import redis_service
-# from cognos.agent.agent import Agent
 from core.agent.agent import Agent
 from core.agent.factory import build_agent
 import json
