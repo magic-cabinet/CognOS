@@ -18,9 +18,12 @@ run
 ```docker-compose up --build```
 
 ### Tech stack
-- redis
-- supabase
-- flask
+#### API Framework
+FastAPI
+#### Short Term Memory and Cache Managment
+Redis
+#### Long Term Memory
+Supabase
 
 ### supported LLMs
 - Anthropic
