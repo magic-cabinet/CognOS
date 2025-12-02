@@ -3,7 +3,8 @@ import os
 
 # class Settings(BaseSettings):
 class Settings:
-    redis_host: str = "redis"
+    # redis_host: str = "redis"
+    redis_host: str = os.getenv("REDIS_HOST","localhost")
     redis_port: int = 6379
     # minio_endpoint: str = "minio:9000"
     minio_endpoint: str = os.getenv("MINIO_ENDPOINT", "localhost:9000") 
