@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 from core_api.services.redis_service import redis_service
 from core.agent.agent import Agent
@@ -31,7 +31,7 @@ class CreateAgentRequest(BaseModel):
     agent_name: str = Field(..., description="Human-friendly name for the agent.")
     agent_type: str = Field(..., description="one of: gemini, openai, claude")
     agent_prompt: str = Field("", description="System / agent prompt.")
-    schema: Optional[Dict[str, Any]] = Field(
+    agent_schema: Optional[Dict[str, Any]] = Field(
         default=None, description="Initial schema (optional)"
     )
     config: Optional[Dict[str, Any]] = Field(
@@ -52,7 +52,7 @@ async def create_agent_route(body: CreateAgentRequest):
             agent_type=body.agent_type,
             agent_name=body.agent_name,
             agent_prompt=body.agent_prompt,
-            schema=body.schema,
+            agent_schema=body.schema,
         )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -97,12 +97,25 @@ async def get_agent(agent_id: str):
         raise HTTPException(404, "Agent not found")
     return json.loads(agent_data)
 
-@router.get("/{agent_id}/schema-induction")
-async def agent_schema(agent_id:str):
+@router.post("/{agent_id}/schema-extraction")
+async def agent_schema(agent_id: str, query: str = Query(...)):
     agent_data = await redis_service._client.get(f"agent:{agent_id}")
     if not agent_data:
         raise HTTPException(404, "Agent not found")
-    # json.loads(agent_data)
+    agent_data_json = json.loads(agent_data)
+    agent_from_factory = build_agent(**agent_data_json)
+    schema = agent_from_factory.schema_extraction(query)
+    return {"response": schema}
+
+@router.post("/{agent_id}/schema-induction")
+async def agent_schema(agent_id: str, query: str = Query(...)):
+    agent_data = await redis_service._client.get(f"agent:{agent_id}")
+    if not agent_data:
+        raise HTTPException(404, "Agent not found")
+    agent_data_json = json.loads(agent_data)
+    agent_from_factory = build_agent(**agent_data_json)
+    schema = agent_from_factory.schema_induction(query)
+    return {"response": schema}
 
 @router.delete("/{agent_id}", status_code=204)
 async def delete_agent(agent_id: str):

@@ -16,7 +16,6 @@ fastapi==0.123.0
 fastapi-cli==0.0.16
 fastapi-cloud-cli==0.5.2
 fastar==0.8.0
-Flask==3.1.2
 google-auth==2.41.1
 google-genai==1.42.0
 h11==0.16.0

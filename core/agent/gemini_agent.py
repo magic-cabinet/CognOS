@@ -15,7 +15,7 @@ class GeminiAgent(Agent):
 
     def __init__(
         self,
-        schema: Schema = Schema(),
+        agent_schema: Schema = Schema(),
         agent_id=uuid1(),
         agent_name: str = "gemini_agent",
         agent_prompt: str = "",
@@ -23,7 +23,7 @@ class GeminiAgent(Agent):
         agent_type:str = "gemini",
     ):
         super().__init__(
-            schema=schema,
+            schema=agent_schema,
             agent_id=agent_id,
             agent_name=agent_name,
             agent_prompt=agent_prompt,
