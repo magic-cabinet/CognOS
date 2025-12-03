@@ -47,6 +47,17 @@ curl -X POST http://localhost:8000/agent/create   -H "Content-Type: application/
       }'
 ```
 
+### Example: Create an Exrtractor Agent
+
+```
+curl -X POST http://localhost:8000/agent/create   -H "Content-Type: application/json"   -d '{
+        "agent_name": "Exctraction Agent",
+        "agent_type": "gemini",
+        "agent_prompt": "make your output a json i need a output feild, reason feild, Entity List feild consiting of entity and hypernym.",
+        "schema": {}
+      }'
+```
+
 ### List your Agents
 
 ```

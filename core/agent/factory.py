@@ -18,7 +18,7 @@ def agent_from_dict(data: dict) -> Agent:
 
     # Convert the types back (UUID, Schema, etc)
     agent_id = UUID(data["agent_id"])
-    schema = data.get("schema", None)  # or reconstruct Schema if needed
+    schema = str(data.get("schema", None))  # or reconstruct Schema if needed
 
     return AgentClass(
         agent_id=agent_id,

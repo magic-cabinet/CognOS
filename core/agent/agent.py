@@ -29,6 +29,8 @@ class Agent:
             "agent_schema": self.schema.__str__(),
             "agent_id": self.agent_id.__str__(),
             "agent_name": self.agent_name,
+            "agent_type": self.agent_type,
+            "agent_prompt": self.agent_prompt,
         }
 
     def query(self, data:str):
@@ -48,7 +50,7 @@ class Agent:
         pass
 
     def schema_induction(self, data:str) -> Dict:
-        output = self.query(data)
+        output = self.query( self.agent_prompt + " /n" + data)
         json_data = parse_llm_json_block(output)
         return json_data
     
