@@ -19,6 +19,8 @@ def agent_from_dict(data: dict) -> Agent:
     # Convert the types back (UUID, Schema, etc)
     agent_id = UUID(data["agent_id"])
     schema = str(data.get("schema", None))  # or reconstruct Schema if needed
+    agent_memory = data.get("agent_memory","[]")
+    agent_memory = json.loads(agent_memory)
 
     return AgentClass(
         agent_id=agent_id,
@@ -26,6 +28,7 @@ def agent_from_dict(data: dict) -> Agent:
         agent_prompt=data.get("agent_prompt", ""),
         schema=schema,
         agent_type=agent_type,
+        agent_memory=agent_memory,
     )
 
 def build_agent(agent_type: str, **kwargs) -> Agent:

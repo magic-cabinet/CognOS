@@ -13,13 +13,15 @@ class Agent:
         agent_id=uuid1(),
         agent_name="agent",
         agent_prompt="",
-        agent_type="gemini"
+        agent_type="gemini",
+        agent_memory = []
     ):
         self.schema = schema
         self.agent_id = agent_id
         self.agent_name = agent_name
         self.agent_prompt = agent_prompt
         self.agent_type = agent_type
+        self.agent_memory = agent_memory
 
     def __str__(self):
         return self.__dict__().__str__()
@@ -31,6 +33,7 @@ class Agent:
             "agent_name": self.agent_name,
             "agent_type": self.agent_type,
             "agent_prompt": self.agent_prompt,
+            "agent_memory" : self.agent_memory.__str__()
         }
 
     def query(self, data:str):

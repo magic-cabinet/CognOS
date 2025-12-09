@@ -20,7 +20,8 @@ class GeminiAgent(Agent):
         agent_name: str = "gemini_agent",
         agent_prompt: str = "",
         model_version: str = "gemini-pro",
-        agent_type:str = "gemini",
+        agent_type: str = "gemini",
+        agent_memory=[],
     ):
         super().__init__(
             schema=agent_schema,
@@ -31,13 +32,19 @@ class GeminiAgent(Agent):
         )
 
         self.model_version: str = model_version
+        # self.agent_memory = agent_memory
 
-
-    def query(self, query:str):
+    def query(self, query: str):
         if query == "":
             query = "Explain how AI works in a few words"
         response = client.models.generate_content(
-            model="gemini-2.0-flash", contents=f"{self.agent_prompt} {query}"
+            model="gemini-2.0-flash", contents=f"{self.agent_prompt} {query} memory:{self.agent_memory.__str__()}"
         )
+
+        input_query = f"{self.agent_prompt} {query} memory:{self.agent_memory.__str__()}"
+
+        # self.agent_memory.append(response.text)
+        new_memory = {"memory_index": len(self.agent_memory),"user" : input_query, "agent_response": response.text }
+        self.agent_memory.append(new_memory)
 
         return response.text
