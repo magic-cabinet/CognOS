@@ -1,7 +1,7 @@
 from core.agent.document import Document
 from core.agent.agent_schema import Schema
 from core.agent.utils import parse_llm_json_block
-from typing import List, Dict
+from typing import List, Dict, Optional
 from uuid import uuid1
 
 
@@ -9,19 +9,19 @@ class Agent:
 
     def __init__(
         self,
-        schema: Schema = Schema(),
-        agent_id=uuid1(),
+        schema: Optional[Schema] = None,
+        agent_id=None,
         agent_name="agent",
         agent_prompt="",
         agent_type="gemini",
-        agent_memory = []
+        agent_memory: Optional[List] = None,
     ):
-        self.schema = schema
-        self.agent_id = agent_id
         self.agent_name = agent_name
         self.agent_prompt = agent_prompt
         self.agent_type = agent_type
-        self.agent_memory = agent_memory
+        self.schema = schema if schema is None else Schema()
+        self.agent_id = agent_id if agent_id is not None else uuid1()
+        self.agent_memory = agent_memory if agent_memory is not None else []
 
     def __str__(self):
         return self.__dict__().__str__()
