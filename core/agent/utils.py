@@ -1,6 +1,7 @@
 import json
 import re
 from typing import Any, Dict
+import requests
 
 
 def parse_llm_json_block(raw: str) -> Dict[str, Any]:
@@ -43,3 +44,8 @@ def parse_llm_json_block(raw: str) -> Dict[str, Any]:
 
     # 4) Final JSON parse
     return json.loads(json_str)
+
+def download_image_bytes(url: str) -> bytes:
+    response = requests.get(url, timeout=30)
+    response.raise_for_status()
+    return response.content
