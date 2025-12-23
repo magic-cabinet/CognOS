@@ -3,9 +3,15 @@ from pydantic import BaseModel
 from uuid import uuid1
 from core.agent.agent import Agent
 from core.agent.agent_schema import Schema
+from core.agent.utils import download_image_bytes
 from dotenv import load_dotenv
 import os
 from google import genai
+from google.genai import types
+import mimetypes
+from urllib.parse import urlparse
+from pathlib import Path
+
 
 load_dotenv()
 
@@ -43,26 +49,48 @@ class GeminiAgent(Agent):
         # self.agent_memory = agent_memory
 
     def query(self, query: str):
-        if query == "":
-            query = "Explain how AI works in a few words"
         response = client.models.generate_content(
             model=self.model_version, contents=f"{self.agent_prompt} {query} memory:{self.agent_memory.__str__()}"
         )
 
         input_query = f"{self.agent_prompt} {query} memory:{self.agent_memory.__str__()}"
 
-        # self.agent_memory.append(response.text)
         new_memory = {"memory_index": len(self.agent_memory),"user" : input_query, "agent_response": response.text }
         self.agent_memory.append(new_memory)
 
         return response.text
     
 
-    def structured_output_query(self, query: str, model:BaseModel):
-        if query == "":
-            query = "Explain how AI works in a few words"
+    def structured_output_query(self, query: str, model:BaseModel, file_path=[], urls=[]):
+
+        part_list = []
+        if file_path:
+            for i in file_path:
+                  with open(i, 'rb') as f:
+                    image_bytes = f.read()
+                    current_mime_types = mimetypes.guess_type(i)[0]
+
+                    current_file_type = types.Part.from_bytes(
+                        data=image_bytes,
+                        mime_type=current_mime_types,
+                        ),
+                    part_list.extend(current_file_type)
+
+        if urls:
+            for i in urls:
+                image_bytes = download_image_bytes(i)
+                url_path = Path(urlparse(i).path)
+                current_mime_types = mimetypes.guess_type(url_path)[0]
+
+                current_file_type = types.Part.from_bytes(
+                data=image_bytes,
+                mime_type=current_mime_types,
+                )
+                part_list.append(current_file_type)
+
+
         response = client.models.generate_content(
-            model=self.model_version, contents=f"{self.agent_prompt} {query} memory:{self.agent_memory.__str__()}",
+            model=self.model_version, contents=[f"{self.agent_prompt} {query} memory:{self.agent_memory.__str__()}",part_list],
                     config={
             "response_mime_type": "application/json",
             "response_schema": model,
@@ -71,7 +99,6 @@ class GeminiAgent(Agent):
 
         input_query = f"{self.agent_prompt} {query} memory:{self.agent_memory.__str__()}"
 
-        # self.agent_memory.append(response.text)
         new_memory = {"memory_index": len(self.agent_memory),"user" : input_query, "agent_response": response.text }
         self.agent_memory.append(new_memory)
 

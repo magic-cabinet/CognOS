@@ -2,6 +2,7 @@ from fastapi import APIRouter, UploadFile, File, HTTPException
 from pydantic import BaseModel
 # from services.minio_service import minio_service
 from core_api.services.minio_service import minio_service
+from pathlib import Path
 import uuid
 
 router = APIRouter()
@@ -34,7 +35,7 @@ async def list_files() -> list[FileInfo]:
 async def upload_file(file: UploadFile = File(...)) -> UploadResponse:
     file_id = str(uuid.uuid4())
     content = await file.read()
-    extension = file.filename.split(".")[-1] if file.filename else "bin"
+    extension = Path(file.filename or "").suffix.lstrip(".") or "bin"
     stored_name = f"{file_id}.{extension}"
 
     minio_service.upload(stored_name, content, file.content_type or "application/octet-stream")
