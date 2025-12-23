@@ -88,9 +88,13 @@ class GeminiAgent(Agent):
                 )
                 part_list.append(current_file_type)
 
+        if part_list:
+            query_contents = [f"{self.agent_prompt} {query} memory:{self.agent_memory.__str__()}",part_list]
+        else:
+            query_contents = [f"{self.agent_prompt} {query} memory:{self.agent_memory.__str__()}"]
 
         response = client.models.generate_content(
-            model=self.model_version, contents=[f"{self.agent_prompt} {query} memory:{self.agent_memory.__str__()}",part_list],
+            model=self.model_version, contents=query_contents,
                     config={
             "response_mime_type": "application/json",
             "response_schema": model,
