@@ -1,6 +1,6 @@
 from minio import Minio
 from minio.error import S3Error
-from core_api.config import settings
+from cognos.core_api.config import settings
 from datetime import timedelta
 import io
 

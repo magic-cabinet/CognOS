@@ -1,6 +1,6 @@
 import json
-from core.agent.gemini_agent import GeminiAgent
-from core.agent.utils import parse_llm_json_block
+from cognos.core.agent.gemini_agent import GeminiAgent
+from cognos.core.agent.utils import parse_llm_json_block
 
 
 alt_temp_agent = GeminiAgent()

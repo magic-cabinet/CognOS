@@ -1,5 +1,5 @@
 from redis.asyncio import Redis
-from core_api.config import settings
+from cognos.core_api.config import settings
 
 
 class RedisService:

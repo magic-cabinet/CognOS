@@ -1,8 +1,8 @@
 import json
 from uuid import UUID
-from core.agent.registry import AGENT_REGISTRY
-from core.agent.agent import Agent
-from core.agent.gemini_agent import GeminiAgent
+from cognos.core.agent.registry import AGENT_REGISTRY
+from cognos.core.agent.agent import Agent
+from cognos.core.agent.gemini_agent import GeminiAgent
 
 
 def agent_from_dict(data: dict) -> Agent:

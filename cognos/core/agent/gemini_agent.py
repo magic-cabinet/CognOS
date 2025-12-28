@@ -1,9 +1,9 @@
 from typing import Optional, Dict, Any
 from pydantic import BaseModel
 from uuid import uuid1
-from core.agent.agent import Agent
-from core.agent.agent_schema import Schema
-from core.agent.utils import download_image_bytes
+from cognos.core.agent.agent import Agent
+from cognos.core.agent.agent_schema import Schema
+from cognos.core.agent.utils import download_image_bytes
 from dotenv import load_dotenv
 import os
 from google import genai

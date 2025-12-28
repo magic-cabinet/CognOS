@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
-from core_api.services.redis_service import redis_service
-from core.agent.agent import Agent
-from core.agent.factory import build_agent
+from cognos.core_api.services.redis_service import redis_service
+from cognos.core.agent.agent import Agent
+from cognos.core.agent.factory import build_agent
 import json
 from pydantic import Field
 from typing import Optional, Dict, Any
@@ -16,7 +16,7 @@ class AgentCreate(BaseModel):
     # agent_name="agent"
     # agent_prompt=""
     # agent_type="gemini"
-    schema : str
+    agent_schema : str
     agent_name : str
     agent_name : str
     agent_prompt : str
@@ -25,7 +25,7 @@ class AgentCreate(BaseModel):
 class AgentResponse(BaseModel):
     agent_id: str
     agent_name: str
-    schema: str
+    agent_schema: str
 
 class CreateAgentRequest(BaseModel):
     agent_name: str = Field(..., description="Human-friendly name for the agent.")

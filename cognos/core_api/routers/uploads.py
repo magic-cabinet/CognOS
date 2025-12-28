@@ -1,7 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from pydantic import BaseModel
 # from services.minio_service import minio_service
-from core_api.services.minio_service import minio_service
+from cognos.core_api.services.minio_service import minio_service
 from pathlib import Path
 import uuid
 

@@ -1,6 +1,6 @@
-from core.agent.document import Document
-from core.agent.agent_schema import Schema
-from core.agent.utils import parse_llm_json_block
+from cognos.core.agent.document import Document
+from cognos.core.agent.agent_schema import Schema
+from cognos.core.agent.utils import parse_llm_json_block
 from typing import List, Dict, Optional
 from uuid import uuid1
 

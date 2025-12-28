@@ -1,10 +1,10 @@
 # from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from core_api.lifespan import lifespan
+from cognos.core_api.lifespan import lifespan
 
 # Routers
-from core_api.routers.uploads import router as uploads_router
-from core_api.routers.agents import router as agents_router
+from cognos.core_api.routers.uploads import router as uploads_router
+from cognos.core_api.routers.agents import router as agents_router
 
 # from routers.world_router import router as world_router
 # from routers.health_router import router as health_router
